@@ -15,7 +15,7 @@ Following suite with the goal of simplicity, I made sure to make my code as neat
 The first development milestone for this project is to have a working typing prompt. The program will generate a prompt from a list of words. After the user completes a test, the program will provide basic information such as WPM and accuracy after completing the test.
 This milestone will have most of the UI elements implemented, with later milestones focusing on features like refinements and user data parsing.
 
-****Milestone 2****
+****Milestone 2**** - In development
 
 The second development milestone is to analyze user test data more thoroughly. Mis-keys and time between inputs will be recorded. This data will also be saved locally to the user’s computer to persist across sessions. An information tab will be added to show the user’s progress.
 Additionally, the ability to hover over an on-screen key to get information about it will be implemented.
@@ -23,3 +23,5 @@ Additionally, the ability to hover over an on-screen key to get information abou
 ****Milestone 3****
 
 The third milestone will mostly focus on refinements in the UI and code. The goal will be to optimize the code as much as possible and add theming options. By this time, Typing Teacher should be ready for the first release.
+# Credits
+Words list from https://gist.github.com/deekayen/4148741
