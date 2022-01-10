@@ -26,4 +26,4 @@ Additionally, the ability to hover over an on-screen key to get information abou
 
 The third milestone will mostly focus on refinements in the UI and code. The goal will be to optimize the code as much as possible and add theming options. By this time, Typing Teacher should be ready for the first release.
 # Credits
-Words list from https://gist.github.com/deekayen/4148741
+Word list from https://gist.github.com/deekayen/4148741
