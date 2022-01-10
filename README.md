@@ -3,12 +3,7 @@ A program built to improve user typing speed and accuracy. While still in the ea
 Typing Teacher provides an array of tests to target what the user is trying to improve on, from short burst typing to endurance modes. In addition, Typing Teacher will provide users with insights on what they need to work on and highlight their improvements to motivate them to continue practicing.
 # Typing Teacher Demo Video
 
-
-
-![video](https://user-images.githubusercontent.com/94150901/148817696-558eb25d-5d5d-40af-81bd-cc3a37874da1.mov)
-
-
-![video](https://user-images.githubusercontent.com/94150901/148817246-e267be1f-5ee0-4bdd-92ae-35ee99a3d59a.mp4)
+[MP4 Link](https://user-images.githubusercontent.com/94150901/148817246-e267be1f-5ee0-4bdd-92ae-35ee99a3d59a.mp4)
 
 [Higher Quality Video Here](http://www.youtube.com/watch?v=qMUSCpTL98k)
 # Using Typing Teacher
