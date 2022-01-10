@@ -1,6 +1,8 @@
 # Typing Teacher
 A program built to improve user typing speed and accuracy. While still in the early stages, the goal of this project is to analyze the user’s typing patterns to give them words with letters they struggle with the most (keys they take the longest to find or mistype most frequently).
 Typing Teacher provides an array of tests to target what the user is trying to improve on, from short burst typing to endurance modes. In addition, Typing Teacher will provide users with insights on what they need to work on and highlight their improvements to motivate them to continue practicing.
+# Typing Teacher Demo Video
+[![Demo Video](http://img.youtube.com/vi/qMUSCpTL98k/0.jpg)](http://www.youtube.com/watch?v=qMUSCpTL98k "Typing Teacher v1.0 Demo Video")
 # Using Typing Teacher
 ![image](https://user-images.githubusercontent.com/94150901/148121685-3650fbb0-b662-4101-a5b5-d905e5f9b230.png)
 Using Typing Teacher is easy. Simply launch the application and begin typing. To change the test length, click on the “x Words” text on the top right. To start a new test, press the tab key on your keyboard.
