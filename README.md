@@ -4,7 +4,12 @@ Typing Teacher provides an array of tests to target what the user is trying to i
 # Typing Teacher Demo Video
 
 
-https://user-images.githubusercontent.com/94150901/148817246-e267be1f-5ee0-4bdd-92ae-35ee99a3d59a.mp4
+
+![video](https://user-images.githubusercontent.com/94150901/148817696-558eb25d-5d5d-40af-81bd-cc3a37874da1.mov)
+
+
+![video](https://user-images.githubusercontent.com/94150901/148817246-e267be1f-5ee0-4bdd-92ae-35ee99a3d59a.mp4)
+
 [Higher Quality Video Here](http://www.youtube.com/watch?v=qMUSCpTL98k)
 # Using Typing Teacher
 ![image](https://user-images.githubusercontent.com/94150901/148121685-3650fbb0-b662-4101-a5b5-d905e5f9b230.png)
