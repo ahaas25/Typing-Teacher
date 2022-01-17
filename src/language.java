@@ -1,6 +1,7 @@
 
 public class language {
-	public String score, words, testOver, wpm, raw, accuracy, time;
+	public String score, words, testOver, wpm, raw, accuracy, time, keyStats,
+		averageTime, sampleSize;
 	
 	// This will later load from a text file so uses can change languages
 	public language() {
@@ -20,5 +21,8 @@ public class language {
 		raw = " (raw)";
 		accuracy = "Accuracy";
 		time = "Time";
+		keyStats = "Key Stats";
+		averageTime = "Average Time";
+		sampleSize = "Sample Size";
 	}
 }

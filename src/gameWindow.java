@@ -6,14 +6,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
-public class gameWindow implements KeyListener, WindowListener, MouseListener {
+public class gameWindow implements KeyListener, WindowListener, MouseListener, MouseMotionListener {
 	private JFrame mainFrame;
-	private keyboard k = new keyboard();
 	private variables v = new variables();
+	private keyboard k = new keyboard(v);
 	private language l = new language();
 	mySurface s;
 
@@ -27,6 +28,7 @@ public class gameWindow implements KeyListener, WindowListener, MouseListener {
 		mainFrame.addKeyListener(this);
 		mainFrame.addWindowListener(this);
 		mainFrame.getContentPane().addMouseListener(this);
+		mainFrame.getContentPane().addMouseMotionListener(this);
 		mainFrame.setFocusTraversalKeysEnabled(false);
 		s = new mySurface();
 		mainFrame.add(s);
@@ -94,8 +96,14 @@ public class gameWindow implements KeyListener, WindowListener, MouseListener {
 			generateTestStrings(g, wordsFont, (int) (getWidth() * 0.8));
 			Rectangle lines[] = new Rectangle[v.drawLines];
 			
+			
 			v.WPMText = l.wpm + ": " + v.getWPM();
 			v.ScoreText = l.score + ": " + 0;
+			
+	        g.setColor(v.backgroundColor);
+	        g.fillRect(0,0, getWidth(), getHeight());
+	        
+	        g.setColor(v.UIColor);
 			
 			// Draw debug rectangles
 			if(v.debug) {
@@ -107,11 +115,13 @@ public class gameWindow implements KeyListener, WindowListener, MouseListener {
 						(int) v.rOptions.getWidth(), (int) v.rOptions.getHeight());
 			}
 			
-			g.drawRect((int) v.rTopBar.getX(), (int) v.rTopBar.getY(), 
-					(int) v.rTopBar.getWidth(), (int) v.rTopBar.getHeight());
-			g.drawRect((int) (getWidth() * 0.05), 
+			g.drawRoundRect(v.rTopBar.x, v.rTopBar.y, v.rTopBar.width, 
+					v.rTopBar.height, 20, 20);
+			g.drawRoundRect((int) (getWidth() * 0.05), 
 					(int) (getHeight() * 0.025), (int) (getWidth() * 0.90), 
-					UIHeightArea);
+					UIHeightArea, 20, 20);
+			
+			g.setColor(v.textColor);
 			drawCenteredString(g, v.WPMText, v.rWPM, wordsFont);
 			drawCenteredString(g, v.ScoreText, v.rScore, wordsFont);
 			drawCenteredString(g, v.testWords + l.words, v.rOptions, wordsFont);
@@ -142,30 +152,41 @@ public class gameWindow implements KeyListener, WindowListener, MouseListener {
 			}
 			
 			if(v.testOver) {
-				Rectangle rStatsWindow = new Rectangle((int) (getWidth() * 0.25), 
-						UIHeight + UITopBarHeightArea * 2, 
-						(int) (getWidth() * 0.5), (int) (UIHeightArea * 0.5));
-				Rectangle[] textLines = new Rectangle[4];
-				
-				g.setColor(v.backgroundColor);
-				g.fillRect((int) rStatsWindow.getX(), (int) rStatsWindow.getY(), 
-						(int) rStatsWindow.getWidth(), (int) rStatsWindow.getHeight());
-				g.setColor(v.textColor);
-				
-				int counter = (int) (rStatsWindow.getY() / (textLines.length - 1));
-				for(int i = 0; i < textLines.length; i++) {
-					textLines[i] = new Rectangle((int) rStatsWindow.getX(), 
-							(int) rStatsWindow.getY() + counter * i, 
-							(int) rStatsWindow.getWidth(), counter);
-				}
-				drawCenteredString(g, l.testOver, textLines[0], wordsFont);
-				drawCenteredString(g, v.WPMText + l.raw, textLines[1], wordsFont);
-				drawCenteredString(g, l.accuracy + ": " + v.calculateAccuracy() 
-					+ "%", textLines[2], wordsFont);
-				drawCenteredString(g, l.time + ": " 
-					+ v.generateElapsedTimeString(), textLines[3], wordsFont);
-				
+				v.calculateEndGameStats();
+				String[] endStats = {l.testOver, l.wpm + ": " + v.getRealWPM(), 
+						l.wpm + l.raw + ": " + v.getWPM(), l.accuracy + ": " 
+						+ v.getAccuracy()
+				+ "%", l.time + ": " + v.generateElapsedTimeString()};
+				drawStatsWindow(g, endStats, wordsFont);				
 			}
+		}
+		
+		private void drawStatsWindow(Graphics g, String[] s, Font f) {
+			double topBarHeight = 0.075;
+			int UIHeight = (int) (getHeight() * 0.025);
+			int UITopBarHeightArea = (int) (getHeight() * topBarHeight);
+			int UIHeightArea = (int) (getHeight() * 0.9 * 0.5);
+			Rectangle rStatsWindow = new Rectangle((int) (getWidth() * 0.25), 
+					UIHeight + UITopBarHeightArea * 2, 
+					(int) (getWidth() * 0.5), (int) (UIHeightArea * 0.5));
+			
+			Rectangle[] textLines = new Rectangle[s.length];
+			
+			g.setColor(v.backgroundColor);
+			g.fillRoundRect(rStatsWindow.x, rStatsWindow.y, rStatsWindow.width, 
+					rStatsWindow.height, 25, 25);
+			g.setColor(v.textColor);
+			int counter = (int) (rStatsWindow.getY() / (textLines.length - 1));
+			for(int i = 0; i < textLines.length; i++) {
+				textLines[i] = new Rectangle((int) rStatsWindow.getX(), 
+						(int) rStatsWindow.getY() + counter * i, 
+						(int) rStatsWindow.getWidth(), counter);
+				drawCenteredString(g, s[i], textLines[i], f);
+			}
+			g.setColor(v.UIColor);
+			g.drawRoundRect(rStatsWindow.x, rStatsWindow.y, rStatsWindow.width, 
+					rStatsWindow.height, 25, 25);
+			g.drawRoundRect(textLines[0].x, textLines[0].y, textLines[0].width, textLines[0].height, 20, 20);
 		}
 		
 		/**
@@ -177,7 +198,6 @@ public class gameWindow implements KeyListener, WindowListener, MouseListener {
 		 * Output: [window enter noon staa, bnelieve expect was,  charity t tube]
 		 */
 		private void generateUserInputStrings() {
-			//v.userString = v.getString();
 			v.userInputStrings.clear();
 			int position = 0;
 			v.typedLines = 0;
@@ -239,8 +259,8 @@ public class gameWindow implements KeyListener, WindowListener, MouseListener {
 			int keySizeY = getHeight()/12;
 			Font keyboardFont = new Font("Dialog", Font.PLAIN, 24);
 			Graphics gr = (Graphics2D) g;
-			gr.setColor(new Color(0,128,128));		
-			key keyboard[][] = k.kb;
+			gr.setColor(v.keyColor);		
+			Key keyboard[][] = k.kb;
 			
 			for(int y = 0; y < keyboard.length; y++) {
 				for(int x = 0; x < keyboard[y].length; x++) {				
@@ -248,22 +268,36 @@ public class gameWindow implements KeyListener, WindowListener, MouseListener {
 					int leftPadding = (getWidth() - xLength)/2;
 					int yLength = keySizeY * keyboard.length;
 					int yPadding = (getHeight() - yLength);
+					Key key = keyboard[y][x];
+					Rectangle keyRect = new Rectangle(leftPadding + x*keySizeX, yPadding + (y-1)
+							*keySizeY, keySizeX, keySizeY);
 					
+					boolean specialChar = keyboard[y][x].specialChar;
 					// Font size will be calculated by window size later.
-					if(keyboard[y][x].specialChar)
+					if(!specialChar)
 						keyboardFont = new Font("Dialog", Font.PLAIN, 24);
 					else
 						keyboardFont = new Font("Dialog", Font.PLAIN, 9);
-					
-					gr.drawRect(leftPadding + x*keySizeX, yPadding + (y-1)
-							*keySizeY, keySizeX, keySizeY);
-					drawCenteredString(gr, keyboard[y][x].key, leftPadding + 
-							x*keySizeX, yPadding + (y-1) 
-							* keySizeY, keySizeX, keySizeY, keyboardFont);
-					if (v.pressedKeys.contains(keyboard[y][x].key)){
-						gr.fillRect(leftPadding + x*keySizeX, yPadding + (y-1)
-								*keySizeY, keySizeX, keySizeY);
+				
+					gr.setColor(v.translucentKeyColor);
+					gr.drawRoundRect(keyRect.x, keyRect.y, keyRect.width, keyRect.height, 25, 25);
+					if (v.pressedKeys.contains(key.key)){
+						gr.fillRoundRect(leftPadding + x*keySizeX, yPadding + (y-1)
+								*keySizeY, keySizeX, keySizeY, 25, 25);
 					}
+					
+					// Checks if game is running
+					if (!v.timerRunning) {
+						if(v.isInRect(keyRect, v.mouseLocation) && !specialChar) {
+							String[] keyStats = key.getStats(l);
+							drawStatsWindow(g, keyStats, keyboardFont);
+							gr.setColor(v.translucentKeyColor);
+							gr.fillRoundRect(leftPadding + x*keySizeX, yPadding + (y-1)
+									*keySizeY, keySizeX, keySizeY, 25, 25);
+						}
+					}
+					gr.setColor(v.keyColor);
+					drawCenteredString(gr, key.key, keyRect, keyboardFont);
 				}
 			}
 		}
@@ -309,15 +343,13 @@ public class gameWindow implements KeyListener, WindowListener, MouseListener {
 		 * Sets the color of each letter according to its status
 		 */
 		public void drawTypingPrompt(Graphics g, String testText, 
-				String userText, Rectangle rect, Font font) {
+			String userText, Rectangle rect, Font font) {
 		    FontMetrics metrics = g.getFontMetrics(font);
 		    int x = rect.x;
 		    int y = rect.y + ((rect.height - metrics.getHeight()) / 2) 
 		    		+ metrics.getAscent();
 		    g.setFont(font);
 		    g.drawString(testText, x, y);
-		    
-		    g.setColor(new Color(128,128,128));
 		    
 		    char c = ' ';
 	        for (int i = 0; i < testText.length(); i++) {
@@ -332,10 +364,6 @@ public class gameWindow implements KeyListener, WindowListener, MouseListener {
 	            g.drawString("" + c, x, y);
 	            x += width;
 	        }
-		}
-		
-		public void drawCenteredRect(Graphics g, Rectangle rect) {
-			g.drawRect(rect.x, rect.y, rect.width, rect.y);
 		}
 		
 		public void paintComponent(Graphics g) {
@@ -370,6 +398,7 @@ public class gameWindow implements KeyListener, WindowListener, MouseListener {
 	    else if (e.getKeyChar() != '\uFFFF' && v.gameRunning){
 	    	v.userString += e.getKeyChar();
 	    	v.timingHandler();
+	    	checkKey(e.getKeyChar());
 	    }
 	    String pressedKey = "" + e.getKeyChar();
 	    if(!v.pressedKeys.contains(pressedKey)) {
@@ -382,6 +411,43 @@ public class gameWindow implements KeyListener, WindowListener, MouseListener {
 	    refreshGraphics();
 	}
 	
+	/**
+	 * Checks if the pressed key is the correct key for test stats.
+	 */
+	public void checkKey(char input) {
+		int x = 0, y = 0;
+		char correctKey = v.getString().charAt(0);
+		if(v.userString.length() > 0 && v.userString.length()
+				<= v.getString().length())
+			correctKey = v.getString().charAt(v.userString.length() - 1);
+
+		// Finds the location of the correct key in the KB array
+		for(int i = 0; i < k.kb.length; i++) {
+			for(int k = 0; k < this.k.kb[i].length; k++) {
+				if(!this.k.kb[i][k].specialChar && this.k.kb[i][k].key.charAt(0) == correctKey) {
+					x = k; y = i;
+				}
+			}
+		}
+		
+		// Checks if user pressed the correct key
+		if(v.userString.length() <= v.getString().length()) {
+			boolean isCorrect = correctKey == input;
+			if(isCorrect) {
+				if(v.keyLastPressed == -1) { // If its the first key of the test
+					k.kb[y][x].update(isCorrect);
+				}
+				else {
+					Long elapsedTime = (System.nanoTime() - v.keyLastPressed)/10000;
+					k.kb[y][x].update(isCorrect, elapsedTime);
+				}
+				v.keyLastPressed = System.nanoTime();				
+			}
+			else { // updates key as being incorrectly pressed
+				k.kb[y][x].update(isCorrect);
+			}
+		}
+	}
 	/**
 	 * Handles key released for keyboard graphics
 	 */
@@ -462,6 +528,10 @@ public class gameWindow implements KeyListener, WindowListener, MouseListener {
 			}
 			v.resetVars();
 		}
+		else if (v.isInRect(v.rWPM, e.getPoint())) {
+			v.darkMode = !v.darkMode;
+			v.generateThemes();
+		}
 	}
 
 	@Override
@@ -475,4 +545,16 @@ public class gameWindow implements KeyListener, WindowListener, MouseListener {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		v.mouseLocation = e.getPoint();
+	}
+	
 }
