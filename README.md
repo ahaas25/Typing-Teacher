@@ -2,12 +2,10 @@
 A program built to improve user typing speed and accuracy. While still in the early stages, the goal of this project is to analyze the user’s typing patterns to give them words with letters they struggle with the most (keys they take the longest to find or mistype most frequently).
 Typing Teacher provides an array of tests to target what the user is trying to improve on, from short burst typing to endurance modes. In addition, Typing Teacher will provide users with insights on what they need to work on and highlight their improvements to motivate them to continue practicing.
 # Typing Teacher Demo Video
+[MP4 Link](https://user-images.githubusercontent.com/94150901/149820428-e1360f02-582d-47ca-a90f-3eaabd2d2a4a.mp4)
 
-[MP4 Link](https://user-images.githubusercontent.com/94150901/148817246-e267be1f-5ee0-4bdd-92ae-35ee99a3d59a.mp4)
-
-[Higher Quality Video Here](http://www.youtube.com/watch?v=qMUSCpTL98k)
 # Using Typing Teacher
-![image](https://user-images.githubusercontent.com/94150901/148121685-3650fbb0-b662-4101-a5b5-d905e5f9b230.png)
+![image](https://user-images.githubusercontent.com/94150901/149679448-59391325-a938-4613-81b4-42423d17306f.png)
 Using Typing Teacher is easy. Simply launch the application and begin typing. To change the test length, click on the “x Words” text on the top right. To start a new test, press the tab key on your keyboard.
 *Not implemented yet:* To view your key stats, hover over the desired key with your mouse.
 # The UI
@@ -20,7 +18,7 @@ Following suite with the goal of simplicity, I made sure to make my code as neat
 The first development milestone for this project is to have a working typing prompt. The program will generate a prompt from a list of words. After the user completes a test, the program will provide basic information such as WPM and accuracy after completing the test.
 This milestone will have most of the UI elements implemented, with later milestones focusing on features like refinements and user data parsing.
 
-****Milestone 2**** - In development
+****Milestone 2**** - Partially released - See changelog
 
 The second development milestone is to analyze user test data more thoroughly. Mis-keys and time between inputs will be recorded. This data will also be saved locally to the user’s computer to persist across sessions. An information tab will be added to show the user’s progress.
 Additionally, the ability to hover over an on-screen key to get information about it will be implemented.
