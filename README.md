@@ -1,4 +1,4 @@
-# Typing Teacher
+# Typing Teacher (Depreciated, see Typing-Test-C)
 A program built to improve user typing speed and accuracy. While still in the early stages, the goal of this project is to analyze the user’s typing patterns to give them words with letters they struggle with the most (keys they take the longest to find or mistype most frequently).
 Typing Teacher provides an array of tests to target what the user is trying to improve on, from short burst typing to endurance modes. In addition, Typing Teacher will provide users with insights on what they need to work on and highlight their improvements to motivate them to continue practicing.
 # Typing Teacher Demo Video
